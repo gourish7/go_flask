@@ -1,3 +1,7 @@
+"""
+    This is route for Go flask application, The endpoints are defined here with function
+"""
+
 from flask import Blueprint
 from app.controllers.dashboard_controller import DashboardController
 from app.controllers.web_controller import WebController

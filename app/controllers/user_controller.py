@@ -8,5 +8,6 @@ class UserController(BaseController):
         if self.is_logged_in():
             True
 
-    def index(self):
+    @staticmethod
+    def index():
         return render_template('index.html')
