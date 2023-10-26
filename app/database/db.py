@@ -1,40 +1,32 @@
-from app import helper
-import app.config.constants as constant
-# from app.excel.excel_db import ExcelDatabase
-# from app.json_db.json_db import JsonDatabase
+from app.config.config import DB_CONNECTION, DB_DATABASE
+from app.database.sqlite import SQLite
 
-APP_DATABASE_TYPE = constant.APP_DATABASE_TYPE
-
-# excel_db = ExcelDatabase()
-# json_db = JsonDatabase()
 
 class Database:
-    # def __init__(self):
-    # Opening JSON file
-    # general db
-    # self.jsonDb = open("database.json", "r+")
-    # self.write_jsonDb = open("database.json", "w")
+    def __init__(self):
+        self.connection = DB_CONNECTION
 
-    # private db to store access tokens
-    # self.jsonDb_private = open("private_database.json", "r")
-    # self.write_jsonDb_private = open("private_database.json", "w")
+    def load(self):
+        if self.connection == 'sqlite':
+            # sqlite = SQLite()
+            # self.connection = sqlite
+            db = self.connection_detail()
+            # print(db['database'])
+            return SQLite(db['database'])
 
-    @staticmethod
-    def get_trading_accounts():
-        trading_accounts_list = []
-        # if APP_DATABASE_TYPE == "excel":
-            # trading_accounts_list = excel_db.get_trading_accounts()
-        # if APP_DATABASE_TYPE == "json":
-            # trading_accounts_list = json_db.get_trading_accounts()
-        return trading_accounts_list
+    def connection_detail(self):
+        response = {}
+        if self.connection == 'sqlite':
+            response['database'] = 'database.sqlite'
+            if DB_DATABASE is not None:
+                response['database'] = DB_DATABASE
 
-    @staticmethod
-    def update_trading_account_details(broker_user_id, access_token):
-        response = False
-        if APP_DATABASE_TYPE == "excel":
-            response = excel_db.update_trading_account_details(broker_user_id, access_token)
-        if APP_DATABASE_TYPE == "json":
-            response = json_db.get_trading_accounts()
+        if self.connection == 'mysql':
+            response['url'] = 'go_flask'
+            response['host'] = '127.0.0.1'
+            response['port'] = '3306'
+            response['database'] = ''
+            response['username'] = ''
+            response['password'] = ''
 
         return response
-

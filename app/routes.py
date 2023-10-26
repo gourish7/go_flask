@@ -6,16 +6,16 @@ from flask import Blueprint
 from app.controllers.dashboard_controller import DashboardController
 from app.controllers.web_controller import WebController
 
-route = Blueprint('routes', __name__)
+routes = Blueprint('routes', __name__)
 web = WebController()
 dashboard = DashboardController()
 
 
-@route.route('/')
+@routes.route('/')
 def web_index():
     return web.index()
 
 
-@route.route('/layout/')
+@routes.route('/layout/')
 def web_layout_index():
     return web.layout_index()
